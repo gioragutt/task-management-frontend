@@ -30,7 +30,7 @@ describe('AuthGuard', () => {
       isAuthenticated(): Observable<boolean> {
         return of(authenticated);
       },
-    };
+    } as AuthService;
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       providers: [
