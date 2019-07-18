@@ -5,5 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
 
-  constructor() { }
+  isAuthenticated(): Observable<boolean> {
+    return of(true);
+  }
 }
