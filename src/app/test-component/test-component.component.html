@@ -20,6 +20,7 @@
         <mat-icon>menu</mat-icon>
       </button>
     </div>
+    <mat-divider class="header-divider"></mat-divider>
     <ul class="tasks-list" cdkDropList [id]="status" [cdkDropListData]="groupedTasks[status]"
       [cdkDropListConnectedTo]="columnOrder" (cdkDropListDropped)="dropTask($event)">
       <li class="task" *ngFor="let task of groupedTasks[status]" cdkDrag>
