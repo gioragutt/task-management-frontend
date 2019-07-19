@@ -1,0 +1,12 @@
+.shell {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .page {
+    max-width: 600px;
+    min-width: 450px;
+  }
+}

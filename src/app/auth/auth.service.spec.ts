@@ -13,7 +13,7 @@ describe('AuthService', () => {
   const expectSignInRequest = () =>
     http.expectOne(req => req.url.endsWith('signin')).flush({ accessToken: ACCESS_TOKEN });
 
-  const signIn = () => service.signIn('username', 'password');
+  const signIn = () => service.signIn({ username: 'asd', password: 'pwd' });
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -45,7 +45,7 @@ describe('AuthService', () => {
 
   it('should not be authenticated after signin and signout', () => {
     signIn().pipe(
-      tap(() => service.signOut()),
+      switchMap(() => service.signOut()),
       switchMap(() => service.isAuthenticated()),
     ).subscribe(authenticated => expect(authenticated).toBeFalsy());
 
@@ -54,7 +54,7 @@ describe('AuthService', () => {
 
   it('should forget access token after signin and signout', () => {
     signIn().pipe(
-      tap(() => service.signOut()),
+      switchMap(() => service.signOut()),
       map(() => service.accessToken),
     ).subscribe(accessToken => expect(accessToken).toBeFalsy());
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 export interface AuthGuardData {
@@ -9,11 +9,11 @@ export interface AuthGuardData {
   routeTo: string | UrlTree;
 }
 
-const getAuthGuardData = ({ data: { authGuardData } }: ActivatedRouteSnapshot) => {
-  if (!authGuardData) {
+const getAuthGuardData = ({ data: { authGuard } }: ActivatedRouteSnapshot) => {
+  if (!authGuard) {
     throw new Error(`AuthGuard must be supplied with AuthGuardData in the route data`);
   }
-  return authGuardData;
+  return authGuard;
 };
 
 @Injectable({
@@ -28,6 +28,8 @@ export class AuthGuard implements CanActivate {
 
     return this.authService.isAuthenticated().pipe(
       map(authenticated => authenticated === mustBeLoggedIn),
+      tap((validationPassed: boolean) =>
+        console.log(`AuthGuard validation to '${next.url.toString()}' ${validationPassed ? 'passed' : 'did not pass'}`)),
       map((validationPassed: boolean) => {
         if (validationPassed) {
           return true;

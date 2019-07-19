@@ -1,0 +1,38 @@
+<mat-toolbar color="accent">
+  <span>Task Management</span>
+  <span style="flex: 1;"></span>
+  <button mat-raised-button color="primary" (click)="logOut()">Sign Out</button>
+</mat-toolbar>
+
+<div class="columns" *ngIf="tasks$ | async as groupedTasks">
+  <div class="column" *ngFor="let status of columnOrder">
+    <div class="column-header">
+      <div class="status">
+        <div [matBadge]="groupedTasks[status].length" matBadgeOverlap="false">
+          {{status | appTitlecase}}
+        </div>
+      </div>
+      <span style="flex: 1"></span>
+      <button mat-icon-button>
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <ul class="tasks-list">
+      <li class="task" *ngFor="let task of groupedTasks[status]">
+        <mat-card>
+          <mat-card-content>
+            <div class="task-title">
+              <a href="#">#{{task.id}} {{task.title}}</a>
+            </div>
+            <div>
+              last updated at {{task.updatedAt | date}}
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </li>
+    </ul>
+  </div>
+</div>

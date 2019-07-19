@@ -1,1 +1,6 @@
-<p>sign-in works!</p>
+<app-credentials-form (credentials)="signIn($event)">
+  <mat-card-title header>Sign in</mat-card-title>
+  <div footer>
+    <span>Don't have an account? <a routerLink="/auth/signup">Sign Up</a></span>
+  </div>
+</app-credentials-form>

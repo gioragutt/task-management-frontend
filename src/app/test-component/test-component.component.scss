@@ -1,0 +1,51 @@
+.columns {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 10px;
+  height: calc(100% - 80px);
+
+  .column:not(:last-child) {
+    margin-right: 10px;
+  }
+
+  .column {
+    background: #eff1f3;
+    border: 1px solid #e1e4e8;
+    border-radius: 7px;
+    flex: 1;
+    padding: 0 10px;
+    min-width: 250px;
+    max-width: 350px;
+
+    .column-header {
+      display: flex;
+
+      .status {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 12px 0;
+      }
+    }
+
+    .tasks-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 0px;
+
+      .task:hover {
+        cursor: move;
+      }
+
+      .task:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      .task .task-title {
+        margin-bottom: 5px;
+      }
+    }
+  }
+}

@@ -11,7 +11,7 @@ const activatedRouteSnapshot = (
   routeTo: AuthGuardData['routeTo']) =>
   ({
     data: {
-      authGuardData: {
+      authGuard: {
         mustBeLogged,
         routeTo,
       },

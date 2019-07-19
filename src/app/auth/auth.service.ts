@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, defer } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import { Credentials } from './credentials.model';
 
 export interface SignInResponse {
   accessToken: string;
@@ -19,12 +20,12 @@ export class AuthService {
     return localStorage.getItem(AuthService.ACCESS_TOKEN);
   }
 
-  signUp(username: string, password: string): Observable<{}> {
-    return this.authRequest('signup', username, password);
+  signUp(credentials: Credentials): Observable<{}> {
+    return this.authRequest('signup', credentials);
   }
 
-  signIn(username: string, password: string): Observable<SignInResponse> {
-    return this.authRequest<SignInResponse>('signin', username, password).pipe(
+  signIn(credentials: Credentials): Observable<SignInResponse> {
+    return this.authRequest<SignInResponse>('signin', credentials).pipe(
       tap(response => this.saveAccessToken(response)),
     );
   }
@@ -33,12 +34,15 @@ export class AuthService {
     localStorage.setItem(AuthService.ACCESS_TOKEN, accessToken);
   }
 
-  private authRequest<T>(path: string, username: string, password: string): Observable<T> {
-    return this.http.post<T>(`http://localhost:3000/auth/${path}`, JSON.stringify({ username, password }));
+  private authRequest<T>(path: string, { username, password }: Credentials): Observable<T> {
+    return this.http.post<T>(`http://localhost:3000/auth/${path}`, { username, password });
   }
 
-  signOut() {
-    this.removeAccessToken();
+  signOut(): Observable<void> {
+    return defer(() => {
+      this.removeAccessToken();
+      return of(undefined);
+    });
   }
 
   private removeAccessToken(): void {

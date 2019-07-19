@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Credentials } from '../credentials.model';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
+  errorMessage = '';
 
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit() {
+  signUp(credentials: Credentials) {
+    this.errorMessage = '';
+    this.authService.signUp(credentials).subscribe(
+      () => this.router.navigateByUrl('/auth/signin'),
+      ({ error: { message } }) => {
+        this.errorMessage = message;
+      });
   }
-
 }

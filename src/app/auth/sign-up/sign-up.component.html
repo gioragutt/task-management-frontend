@@ -1,1 +1,7 @@
-<p>sign-up works!</p>
+<app-credentials-form (credentials)="signUp($event)">
+  <mat-card-title header>Sign up</mat-card-title>
+  <div footer>
+    <span>Already have an account? <a routerLink="/auth/signin">Sign In</a></span>
+  </div>
+  <span error *ngIf="errorMessage">{{errorMessage}}</span>
+</app-credentials-form>
