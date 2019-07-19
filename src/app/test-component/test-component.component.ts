@@ -59,14 +59,18 @@ export class TestComponentComponent {
       return;
     }
     const { id } = previousContainer.data[previousIndex];
+    transferArrayItem(previousContainer.data, container.data, previousIndex, currentIndex);
+
     this.http.patch(`http://localhost:3000/tasks/${id}/status`, { status: container.id }, {
       headers: {
         Authorization: `Bearer ${this.authService.accessToken}`,
       },
     }).subscribe(
       (updatedTask: Task) => {
-        previousContainer.data[previousIndex] = updatedTask;
-        transferArrayItem(previousContainer.data, container.data, previousIndex, currentIndex);
+        container.data[currentIndex] = updatedTask;
+      },
+      () => {
+        transferArrayItem(container.data, previousContainer.data, currentIndex, previousIndex);
       },
     );
   }
