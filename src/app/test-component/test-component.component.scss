@@ -17,6 +17,8 @@
     padding: 0 10px;
     min-width: 250px;
     max-width: 350px;
+    display: flex;
+    flex-direction: column;
 
     .column-header {
       display: flex;
@@ -34,6 +36,7 @@
       list-style: none;
       padding: 0;
       margin-top: 0px;
+      flex: 1;
 
       .task:hover {
         cursor: move;

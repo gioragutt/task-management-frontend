@@ -20,8 +20,9 @@
         <mat-icon>menu</mat-icon>
       </button>
     </div>
-    <ul class="tasks-list">
-      <li class="task" *ngFor="let task of groupedTasks[status]">
+    <ul class="tasks-list" cdkDropList [id]="status" [cdkDropListData]="groupedTasks[status]"
+      [cdkDropListConnectedTo]="columnOrder" (cdkDropListDropped)="dropTask($event)">
+      <li class="task" *ngFor="let task of groupedTasks[status]" cdkDrag>
         <mat-card>
           <mat-card-content>
             <div class="task-title">

@@ -12,7 +12,6 @@ import { BrowserModule } from '@angular/platform-browser';
   ],
   exports: [
     CommonModule,
-    BrowserModule,
     HttpClientModule,
     MaterialModule,
     ReactiveFormsModule,

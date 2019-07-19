@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
-import { Subject, timer, of, Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-
-const id = () => Math.floor(Math.random() * 999999);
+import { map, catchError, tap, switchMapTo } from 'rxjs/operators';
+import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
+import { throwError } from 'rxjs';
 
 interface Task {
   id: number;
@@ -46,13 +44,32 @@ export class TestComponentComponent {
     headers: {
       Authorization: `Bearer ${this.authService.accessToken}`,
     },
-  }).pipe(map(groupByStatus));
+  }).pipe(map(groupByStatus), catchError(e => {
+    if (e.status !== 401) {
+      return;
+    }
+    return this.authService.signOut().pipe(
+      tap(() => this.router.navigateByUrl('/auth/signin')),
+      switchMapTo(throwError(e)),
+    );
+  }));
 
-  data: { status: string, tasks: number[] }[] = [
-    { status: 'Open', tasks: [id(), id(), id()] },
-    { status: 'In Progress', tasks: [id(), id()] },
-    { status: 'Done', tasks: [id(), id()] },
-  ];
+  dropTask({ container, previousContainer, currentIndex, previousIndex }: CdkDragDrop<Task[]>) {
+    if (container === previousContainer) {
+      return;
+    }
+    const { id } = previousContainer.data[previousIndex];
+    this.http.patch(`http://localhost:3000/tasks/${id}/status`, { status: container.id }, {
+      headers: {
+        Authorization: `Bearer ${this.authService.accessToken}`,
+      },
+    }).subscribe(
+      (updatedTask: Task) => {
+        previousContainer.data[previousIndex] = updatedTask;
+        transferArrayItem(previousContainer.data, container.data, previousIndex, currentIndex);
+      },
+    );
+  }
 
   logOut(): void {
     this.authService.signOut().subscribe(() => this.router.navigateByUrl('/auth/signin'));
