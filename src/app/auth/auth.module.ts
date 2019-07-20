@@ -5,6 +5,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthShellComponent } from './auth-shell/auth-shell.component';
 import { AuthorizationInterceptor } from './authorization.interceptor';
 import { CredentialsFormComponent } from './credentials-form/credentials-form.component';
+import { ExpiredJwtInterceptor } from './expired-jwt.interceptor';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 
@@ -16,6 +17,7 @@ const provideInterceptor = <T extends HttpInterceptor>(type: Type<T>): Provider 
 
 export const AUTH_PROVIDERS: Provider[] = [
   provideInterceptor(AuthorizationInterceptor),
+  provideInterceptor(ExpiredJwtInterceptor),
 ];
 
 @NgModule({
