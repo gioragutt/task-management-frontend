@@ -14,8 +14,16 @@
 .task {
   list-style: none;
 
-  .task-title {
-    margin-bottom: 5px;
+  .task-content-wrapper {
+    display: flex;
+
+    .task-content {
+      flex: 1;
+
+      .task-title {
+        margin-bottom: 5px;
+      }
+    }
   }
 }
 

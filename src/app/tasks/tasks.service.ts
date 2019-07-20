@@ -15,6 +15,10 @@ export class TasksService {
     return this.http.get<Task[]>(TASKS_PATH);
   }
 
+  deleteTask(taskId: number): Observable<{}> {
+    return this.http.delete(`${TASKS_PATH}/${taskId}`);
+  }
+
   updateTaskStatus(taskId: number, status: TaskStatus): Observable<Task> {
     return this.http.patch<Task>(`${TASKS_PATH}/${taskId}/status`, { status });
   }

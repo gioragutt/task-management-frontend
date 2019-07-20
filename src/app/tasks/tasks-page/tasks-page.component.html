@@ -25,12 +25,19 @@
       [cdkDropListConnectedTo]="columnOrder" (cdkDropListDropped)="dropTask($event)">
       <li class="task" *ngFor="let task of groupedTasks[status]" cdkDrag>
         <mat-card>
-          <mat-card-content>
-            <div class="task-title">
-              <a href="#">#{{task.id}} {{task.title}}</a>
+          <mat-card-content class="task-content-wrapper">
+            <div class="task-content">
+              <div class="task-title">
+                <a href="#">#{{task.id}} {{task.title}}</a>
+              </div>
+              <div>
+                last updated at {{task.updatedAt | date}}
+              </div>
             </div>
-            <div>
-              last updated at {{task.updatedAt | date}}
+            <div class="delete-task">
+              <button mat-icon-button color="warn" (click)="deleteTask(groupedTasks[status], task)">
+                <mat-icon>delete</mat-icon>
+              </button>
             </div>
           </mat-card-content>
         </mat-card>
