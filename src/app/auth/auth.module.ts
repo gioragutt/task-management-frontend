@@ -1,10 +1,22 @@
-import { NgModule } from '@angular/core';
+import { HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgModule, Provider, Type } from '@angular/core';
+import { SharedModule } from '../shared/shared.module';
+import { AuthRoutingModule } from './auth-routing.module';
+import { AuthShellComponent } from './auth-shell/auth-shell.component';
+import { AuthorizationInterceptor } from './authorization.interceptor';
+import { CredentialsFormComponent } from './credentials-form/credentials-form.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { AuthRoutingModule } from './auth-routing.module';
-import { CredentialsFormComponent } from './credentials-form/credentials-form.component';
-import { SharedModule } from '../shared/shared.module';
-import { AuthShellComponent } from './auth-shell/auth-shell.component';
+
+const provideInterceptor = <T extends HttpInterceptor>(type: Type<T>): Provider => ({
+  provide: HTTP_INTERCEPTORS,
+  useClass: type,
+  multi: true,
+});
+
+export const AUTH_PROVIDERS: Provider[] = [
+  provideInterceptor(AuthorizationInterceptor),
+];
 
 @NgModule({
   declarations: [

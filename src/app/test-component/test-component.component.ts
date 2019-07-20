@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError, tap, switchMapTo } from 'rxjs/operators';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
-import { throwError } from 'rxjs';
+import { pipe, throwError } from 'rxjs';
 
 interface Task {
   id: number;
@@ -40,19 +40,16 @@ export class TestComponentComponent {
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) {
   }
 
-  tasks$ = this.http.get<Task[]>('http://localhost:3000/tasks', {
-    headers: {
-      Authorization: `Bearer ${this.authService.accessToken}`,
-    },
-  }).pipe(map(groupByStatus), catchError(e => {
-    if (e.status !== 401) {
-      return;
-    }
-    return this.authService.signOut().pipe(
-      tap(() => this.router.navigateByUrl('/auth/signin')),
-      switchMapTo(throwError(e)),
-    );
-  }));
+  tasks$ = this.http.get<Task[]>('http://localhost:3000/tasks')
+    .pipe(map(groupByStatus), catchError(e => {
+      if (e.status !== 401) {
+        return;
+      }
+      return this.authService.signOut().pipe(
+        tap(() => this.router.navigateByUrl('/auth/signin')),
+        switchMapTo(throwError(e)),
+      );
+    }));
 
   dropTask({ container, previousContainer, currentIndex, previousIndex }: CdkDragDrop<Task[]>) {
     if (container === previousContainer) {
@@ -61,11 +58,7 @@ export class TestComponentComponent {
     const { id } = previousContainer.data[previousIndex];
     transferArrayItem(previousContainer.data, container.data, previousIndex, currentIndex);
 
-    this.http.patch(`http://localhost:3000/tasks/${id}/status`, { status: container.id }, {
-      headers: {
-        Authorization: `Bearer ${this.authService.accessToken}`,
-      },
-    }).subscribe(
+    this.http.patch(`http://localhost:3000/tasks/${id}/status`, { status: container.id }).subscribe(
       (updatedTask: Task) => {
         container.data[currentIndex] = updatedTask;
       },
