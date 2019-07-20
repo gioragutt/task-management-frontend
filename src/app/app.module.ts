@@ -4,15 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TestComponentComponent } from './test-component/test-component.component';
 import { SharedModule } from './shared/shared.module';
 import { AUTH_PROVIDERS } from './auth/auth.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TestComponentComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     SharedModule,
     BrowserModule,

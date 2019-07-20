@@ -9,6 +9,12 @@ export interface AuthGuardData {
   routeTo: string | UrlTree;
 }
 
+const createAuthGuardData = (mustBeLogged: AuthGuardData['mustBeLogged']) =>
+  (routeTo: AuthGuardData['routeTo']): AuthGuardData => ({ mustBeLogged, routeTo });
+
+export const loggedInOrRedirectTo = createAuthGuardData('in');
+export const loggedOutOrRedirectTo = createAuthGuardData('out');
+
 const getAuthGuardData = ({ data: { authGuard } }: ActivatedRouteSnapshot) => {
   if (!authGuard) {
     throw new Error(`AuthGuard must be supplied with AuthGuardData in the route data`);

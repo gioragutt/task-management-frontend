@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard, AuthGuardData } from './auth.guard';
+import { AuthGuard, loggedOutOrRedirectTo } from './auth.guard';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { AuthShellComponent } from './auth-shell/auth-shell.component';
@@ -10,10 +10,7 @@ const routes: Routes = [{
   component: AuthShellComponent,
   canActivate: [AuthGuard],
   data: {
-    authGuard: {
-      mustBeLogged: 'out',
-      routeTo: '/',
-    } as AuthGuardData,
+    authGuard: loggedOutOrRedirectTo('/'),
   },
   children: [
     { path: 'signin', component: SignInComponent },
