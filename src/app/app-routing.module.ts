@@ -20,6 +20,11 @@ const routes: Routes = [
       } as AuthGuardData,
     },
   },
+  {
+    path: 'tasks',
+    loadChildren: () => import('./tasks/tasks.module')
+      .then(m => m.TasksModule),
+  },
 ];
 
 @NgModule({
