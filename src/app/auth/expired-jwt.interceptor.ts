@@ -14,7 +14,7 @@ export class ExpiredJwtInterceptor implements HttpInterceptor {
       if (err && err.status !== 401) {
         return throwError(err);
       }
-      console.log('Access Token expired, signing out');
+      console.log('[ExpiredJwtInterceptor] Access Token expired, signing out');
       return this.authService.signOut().pipe(
         tap(() => this.router.navigateByUrl('/auth/signin')),
         switchMapTo(throwError(err)),
