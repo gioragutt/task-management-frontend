@@ -13,6 +13,10 @@
 
 .task {
   list-style: none;
+
+  .task-title {
+    margin-bottom: 5px;
+  }
 }
 
 .columns {
@@ -64,10 +68,6 @@
 
       .task:not(:last-child) {
         margin-bottom: 10px;
-      }
-
-      .task .task-title {
-        margin-bottom: 5px;
       }
     }
   }
