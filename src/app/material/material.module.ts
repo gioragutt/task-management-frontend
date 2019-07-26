@@ -13,6 +13,7 @@ import {
 } from '@angular/material';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 @NgModule({
   exports: [
@@ -26,6 +27,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatIconModule,
     MatBadgeModule,
     DragDropModule,
+    TextFieldModule,
   ],
 })
 export class MaterialModule { }

@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppTitlecasePipe } from './app-titlecase.pipe';
-import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
