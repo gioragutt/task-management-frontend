@@ -6,11 +6,11 @@
   </ng-container>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close color="primary">
-    {{ dialog.close }}
+  <button mat-button mat-dialog-close [color]="dialog.close.color">
+    {{ dialog.close.text }}
   </button>
-  <button *ngIf="dialog.ok" mat-button color="primary" [disabled]="contentRef.form.invalid"
+  <button *ngIf="dialog.ok" mat-button [color]="dialog.ok.color" [disabled]="contentRef.form.invalid"
     (click)="dialogRef.close(contentRef.form.value)">
-    {{ dialog.ok }}
+    {{ dialog.ok.text }}
   </button>
 </mat-dialog-actions>

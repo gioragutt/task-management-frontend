@@ -5,10 +5,10 @@
   {{ dialog.content }}
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="dialogRef.close(false)" color="primary">
-    {{ dialog.close }}
+  <button mat-button (click)="dialogRef.close(false)" [color]="dialog.close.color">
+    {{ dialog.close.text }}
   </button>
-  <button *ngIf="dialog.ok" mat-button color="primary" (click)="dialogRef.close(true)">
-    {{ dialog.ok }}
+  <button *ngIf="dialog.ok" mat-button [color]="dialog.ok.color" (click)="dialogRef.close(true)">
+    {{ dialog.ok.text }}
   </button>
 </mat-dialog-actions>

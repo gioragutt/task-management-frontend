@@ -1,12 +1,11 @@
 import { FormGroup } from '@angular/forms';
 import { Type } from '@angular/core';
+import { ThemePalette } from '@angular/material';
 
-export interface ActionButtonData {
+export interface ActionButton {
   text: string;
-  color: 'primary' | 'accent' | 'warn' | '';
+  color?: ThemePalette;
 }
-
-export type ActionButton = string | ActionButtonData;
 
 export interface AlertConfig {
   title?: string;
@@ -20,27 +19,8 @@ export interface ConfirmConfig extends AlertConfig {
 
 export interface FormComponent<T> {
   form: FormGroup;
-  formValue: T;
 }
 
 export interface PromptConfig<T> extends ConfirmConfig {
   formComponent: Type<FormComponent<T>>;
-}
-
-const normalizeActionButton = (actionButton?: ActionButton): ActionButtonData => {
-  if (!actionButton) {
-    return undefined;
-  }
-  if (typeof actionButton === 'string') {
-    return { text: actionButton, color: 'primary' };
-  }
-  return actionButton;
-};
-
-export function normalizeDialogConfig<T extends ConfirmConfig>({ ok, close, ...rest }: T) {
-  return {
-    ...rest,
-    ok: normalizeActionButton(ok),
-    close: normalizeActionButton(close),
-  };
 }
