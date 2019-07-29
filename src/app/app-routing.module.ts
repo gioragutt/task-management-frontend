@@ -12,6 +12,11 @@ const routes: Routes = [
     loadChildren: () => import('./tasks/tasks.module')
       .then(m => m.TasksModule),
   },
+  {
+    path: 'editor-testing',
+    loadChildren: () => import('./editor-testing/editor-testing.module')
+      .then(m => m.EditorTestingModule),
+  },
   { path: '**', pathMatch: 'full', redirectTo: '/tasks' },
 ];
 
