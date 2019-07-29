@@ -1,1 +1,14 @@
-<p>editor-testing works!</p>
+<div class="page-container">
+
+  <select (change)="onThemeChanged($event)">
+    <option *ngFor="let theme of themes" [value]="theme">{{theme}}</option>
+  </select>
+
+  <div>
+    <input type="checkbox" (change)="onMinimapChanged($event)" />
+    Minimap
+  </div>
+
+  <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+
+</div>
